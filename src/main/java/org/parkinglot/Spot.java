@@ -11,6 +11,7 @@ public class Spot {
     private SpotStatus status;
 
     private int level;
+
     private static Map<Integer, Spot> spotsMap = new HashMap<>();
 
     public Spot(SpotType type, int level) {
@@ -31,6 +32,10 @@ public class Spot {
         return status;
     }
 
+    public void setStatus(SpotStatus status) {
+        this.status = status;
+    }
+
     public void setType(SpotType type) {
         this.type = type;
     }
@@ -42,4 +47,5 @@ public class Spot {
     public static Spot getSpotById(Integer id) {
         return spotsMap.get(id);
     }
+
 }
