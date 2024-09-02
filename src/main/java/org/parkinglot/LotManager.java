@@ -10,17 +10,17 @@ public class LotManager {
         List<Spot> allottedSpots = new ArrayList<>();
 
         for(ParkingLevel level : ParkingLot.getLevels()) {
-
+            System.out.println("checking level "+ level.getLevel() +" to park "+ vehicle);
             for(Spot spot : level.getSpots()) {
                 if(VehicleRequirements.getVehicleSpotMap().get(vehicle.getType()).contains(spot.getType())){
                     SpotType spotType = spot.getType();
-                    Integer spotsReq = VehicleRequirements.getSpotsQuantity().get(vehicle.getType());
+                    int spotsReq = VehicleRequirements.getSpotsQuantity().get(vehicle.getType());
                     int spotId = spot.getId();
                     int spotLevel = spot.getLevel();
 
-                    while(spotsReq>=0) {
+                    while(spotsReq>0) {
                         Spot prospectiveSpot = Spot.getSpotById(spotId);
-                        if(Spot.getSpotById(spotId).getLevel() == spotLevel  && spot.getType().equals(spotType)) {
+                        if(prospectiveSpot!=null && prospectiveSpot.getLevel() == spotLevel  && prospectiveSpot.getType().equals(spotType) && prospectiveSpot.getStatus().equals(SpotStatus.AVAILABLE)) {
                             spotsReq--;
                             allottedSpots.add(prospectiveSpot);
                             spotId++;
@@ -29,12 +29,16 @@ public class LotManager {
                             break;
                         }
                     }
-
+                    if(spotsReq == 0) return allottedSpots;
+                    else {
+                        allottedSpots.clear();
+                    }
                 }
 
             }
 
         }
+        allottedSpots.clear();
         return allottedSpots;
     }
 

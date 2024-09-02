@@ -19,6 +19,7 @@ public class Spot {
         this.id = ++globalSpotId;
         this.status = SpotStatus.AVAILABLE;
         this.level = level;
+        spotsMap.put(this.id, this);
     }
     public int getId() {
         return id;
@@ -48,4 +49,8 @@ public class Spot {
         return spotsMap.get(id);
     }
 
+    @Override
+    public String toString(){
+        return "id "+this.getId() + " at level "+this.getLevel() +" of type "+this.getType().name();
+    }
 }

@@ -34,4 +34,9 @@ public class Vehicle {
     public void releaseSpots() {
         this.spotsAllotted.clear();
     }
+
+    @Override
+    public String toString() {
+        return "Vehicle "+this.id +" which is a "+this.type.name();
+    }
 }
