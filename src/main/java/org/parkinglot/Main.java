@@ -42,6 +42,7 @@ public class Main {
         vehicleTypeMap.put(2, VehicleType.TRUCK);
 
         int noOfVehicles = random.nextInt(20);
+        
         System.out.println("Number of vehicles awaiting parking, "+noOfVehicles+"\n");
         ParkingService parkingService = new ParkingService(new LotManager());
         for(int i=0; i<noOfVehicles; i++) {

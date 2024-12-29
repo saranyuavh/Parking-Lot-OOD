@@ -25,9 +25,6 @@ public class ParkingService {
     }
 
     public void exit(Vehicle vehicle) {
-        for(Spot spot : vehicle.getSpotsAllotted()) {
-            spot.setStatus(SpotStatus.AVAILABLE);
-        }
-        vehicle.releaseSpots();
+        manager.exitVehicleAndReleaseSpots(vehicle);
     }
 }

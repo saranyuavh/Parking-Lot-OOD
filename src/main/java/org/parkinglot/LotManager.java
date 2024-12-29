@@ -1,10 +1,12 @@
 package org.parkinglot;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LotManager {
-
+    private static Set<Vehicle> parkedVehicles = new HashSet<>();
     public List<Spot> getASpotForVehicle(Vehicle vehicle) {
 
         List<Spot> allottedSpots = new ArrayList<>();
@@ -29,7 +31,10 @@ public class LotManager {
                             break;
                         }
                     }
-                    if(spotsReq == 0) return allottedSpots;
+                    if(spotsReq == 0) {
+                        parkedVehicles.add(vehicle);
+                        return allottedSpots;
+                    }
                     else {
                         allottedSpots.clear();
                     }
@@ -42,7 +47,17 @@ public class LotManager {
         return allottedSpots;
     }
 
-    public void exitVehicleAndReleaseSpots(Vehicle vehicles) {
-
+    public void exitVehicleAndReleaseSpots(Vehicle vehicle) {
+        if(parkedVehicles.contains(vehicle)) {
+            for (Spot spot : vehicle.getSpotsAllotted()) {
+                spot.setStatus(SpotStatus.AVAILABLE);
+                System.out.println("Released "+spot);
+            }
+            vehicle.releaseSpots();
+            parkedVehicles.remove(vehicle);
+            System.out.println(vehicle+" exited successfully");
+        } else {
+            System.out.println("Invalid Request, vehicle is not parked at all or left already");
+        }
     }
 }
